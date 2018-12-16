@@ -27,7 +27,6 @@ public class Tempat extends JPanel {
     public Tempat(File file) {
         bacaKonfigurasi(file);
     }
-
     public void bacaKonfigurasi(File file) {
         try {
             if (file != null) {
@@ -167,13 +166,13 @@ public class Tempat extends JPanel {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
+                    JOptionPane.showMessageDialog(null, "Perintah Tidak Diketahui!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
+                JOptionPane.showMessageDialog(null, "Perintah Tidak Diketahui!");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Jumlah kata hanya satu");
+            JOptionPane.showMessageDialog(null, "Jumlah Perintah Hanya Satu!");
         }
     }
 
@@ -226,7 +225,7 @@ public class Tempat extends JPanel {
     public void undo() {
         int i = Allperintah.size() - 1;
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Sudah di tempat semula");
+            JOptionPane.showMessageDialog(null, "Kembali ke tempat awal");
         } else {
             String input = Allperintah.get(i);
             String[] un = input.split(" ");
