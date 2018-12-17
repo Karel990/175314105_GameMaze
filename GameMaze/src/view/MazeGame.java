@@ -10,12 +10,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class MainMazeGame extends javax.swing.JFrame {
+public class MazeGame extends javax.swing.JFrame {
 
     Tempat tempat;
     File file;
 
-    public MainMazeGame() {
+    public MazeGame() {
         initComponents();
     }
 
@@ -31,7 +31,7 @@ public class MainMazeGame extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         perintah = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btnRestar = new javax.swing.JButton();
+        Restart = new javax.swing.JButton();
         pixelPanel = new javax.swing.JPanel();
         okButton = new javax.swing.JButton();
         langkahLabel = new javax.swing.JLabel();
@@ -61,10 +61,10 @@ public class MainMazeGame extends javax.swing.JFrame {
 
         jLabel1.setText("PERINTAH");
 
-        btnRestar.setText("RESTART");
-        btnRestar.addActionListener(new java.awt.event.ActionListener() {
+        Restart.setText("RESTART");
+        Restart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRestarActionPerformed(evt);
+                RestartActionPerformed(evt);
             }
         });
 
@@ -181,7 +181,7 @@ public class MainMazeGame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(okButton)
                         .addGap(67, 67, 67)
-                        .addComponent(btnRestar)
+                        .addComponent(Restart)
                         .addGap(79, 79, 79)
                         .addComponent(saveButton))
                     .addGroup(layout.createSequentialGroup()
@@ -208,7 +208,7 @@ public class MainMazeGame extends javax.swing.JFrame {
                             .addComponent(perintah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(okButton)
-                        .addComponent(btnRestar)
+                        .addComponent(Restart)
                         .addComponent(saveButton)))
                 .addContainerGap())
         );
@@ -244,10 +244,10 @@ public class MainMazeGame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_gameMenuActionPerformed
 
-    private void btnRestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarActionPerformed
+    private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
         tempat.restart();
 
-    }//GEN-LAST:event_btnRestarActionPerformed
+    }//GEN-LAST:event_RestartActionPerformed
 
     private void map1MenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_map1MenuItemActionPerformed
         map1MenuItem.setSelected(true);
@@ -358,13 +358,13 @@ public class MainMazeGame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainMazeGame().setVisible(true);
+                new MazeGame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRestar;
+    private javax.swing.JButton Restart;
     private javax.swing.JMenuItem caraMainMenuItem;
     private java.awt.Choice choice1;
     private javax.swing.JMenuItem exitMenuItem;
