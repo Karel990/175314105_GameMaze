@@ -338,6 +338,9 @@ public class MainMazeGame extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
 
+        tempat.PerintahGerak(perintah.getText());
+        perintah.setText("");
+        langkahText.setText(String.valueOf(tempat.getAllperintah().size()));
         tempat.Completed();
     }//GEN-LAST:event_okButtonActionPerformed
 

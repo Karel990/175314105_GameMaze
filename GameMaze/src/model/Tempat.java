@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static sun.audio.AudioPlayer.player;
 
 public class Tempat extends JPanel {
 
@@ -22,6 +23,7 @@ public class Tempat extends JPanel {
     private int tinggi = 0;
     private int jarak = 40;
     private File Alamatpeta;
+    private int langkah=0;
     private ArrayList<String> Allperintah = new ArrayList<String>();
 
     public Tempat(File file) {
@@ -66,6 +68,60 @@ public class Tempat extends JPanel {
             }
         } catch (IOException ex) {
             Logger.getLogger(Tempat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void PerintahGerak(String input) {
+        String in[] = input.split(" ");
+        if (in.length > 2) {
+            JOptionPane.showMessageDialog(null, "Jumlah kata lebih dari 2");
+        } else if (in.length == 2) {
+            if (in[0].matches("[udrl]")) {
+                Allperintah.add(input);
+                if (in[0].equalsIgnoreCase("u")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekObjekTabrakTembokKiri(pemain, "u")) {
+                            return;
+                        } else {
+                            pemain.Gerak(0, -jarak);
+                            repaint();
+                        }
+
+                    }
+                } else if (in[0].equalsIgnoreCase("d")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekObjekTabrakTembokKanan(pemain, "d")) {
+                            return;
+                        } else {
+                            pemain.Gerak(0, jarak);
+                            repaint();
+                        }
+                    }
+                } else if (in[0].equalsIgnoreCase("r")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekObjekTabrakTembokAtas(pemain, "r")) {
+                            return;
+                        } else {
+                            pemain.Gerak(jarak, 0);
+                            repaint();
+                        }
+                    }
+                } else if (in[0].equalsIgnoreCase("l")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekObjekTabrakTembokBawah(pemain, "l")) {
+                            return;
+                        } else {
+                            pemain.Gerak(-jarak, 0);
+                            repaint();
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Jumlah kata hanya satu");
         }
     }
 
@@ -120,65 +176,8 @@ public class Tempat extends JPanel {
             }
         }
     }
-
-    public void PerintahGerak(String input) {
-        String in[] = input.split(" ");
-        if (in.length > 2) {
-            JOptionPane.showMessageDialog(null, "Jumlah kata lebih dari 2");
-        } else if (in.length == 2) {
-            if (in[0].matches("[udrl]")) {
-                Allperintah.add(input);
-                if (in[0].equalsIgnoreCase("u")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekObjekTabrakTembok(pemain, "u")) {
-                            return;
-                        } else {
-                            pemain.Gerak(0, -jarak);
-                            repaint();
-                        }
-
-                    }
-                } else if (in[0].equalsIgnoreCase("d")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekObjekTabrakTembok(pemain, "d")) {
-                            return;
-                        } else {
-                            pemain.Gerak(0, jarak);
-                            repaint();
-                        }
-                    }
-                } else if (in[0].equalsIgnoreCase("r")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekObjekTabrakTembok(pemain, "r")) {
-                            return;
-                        } else {
-                            pemain.Gerak(jarak, 0);
-                            repaint();
-                        }
-                    }
-                } else if (in[0].equalsIgnoreCase("l")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekObjekTabrakTembok(pemain, "l")) {
-                            return;
-                        } else {
-                            pemain.Gerak(-jarak, 0);
-                            repaint();
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Perintah Tidak Diketahui!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Perintah Tidak Diketahui!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Jumlah Perintah Hanya Satu!");
-        }
-    }
-
-    private boolean cekObjekTabrakTembok(Sel pemain, String input) {
+    private boolean cekObjekTabrakTembokKiri(Sel pemain, String u) {
         boolean bantu = false;
-        if (input.equalsIgnoreCase("l")) {
             for (int i = 0; i < tembok.size(); i++) {
                 Tembok wall = (Tembok) tembok.get(i);
                 if (pemain.PosisiKiriObjek(wall)) {
@@ -186,8 +185,10 @@ public class Tempat extends JPanel {
                     break;
                 }
             }
-
-        } else if (input.equalsIgnoreCase("r")) {
+            return bantu;
+        }
+    private boolean cekObjekTabrakTembokKanan(Sel player, String d) {
+            boolean bantu = false;
             for (int i = 0; i < tembok.size(); i++) {
                 Tembok wall = (Tembok) tembok.get(i);
                 if (pemain.PosisiKananObjek(wall)) {
@@ -195,7 +196,10 @@ public class Tempat extends JPanel {
                     break;
                 }
             }
-        } else if (input.equalsIgnoreCase("u")) {
+            return bantu;
+    }            
+    private boolean cekObjekTabrakTembokAtas(Sel player, String r) {
+            boolean bantu = false;
             for (int i = 0; i < tembok.size(); i++) {
                 Tembok wall = (Tembok) tembok.get(i);
                 if (pemain.PosisiAtasObjek(wall)) {
@@ -203,89 +207,25 @@ public class Tempat extends JPanel {
                     break;
                 }
             }
-        } else if (input.equalsIgnoreCase("d")) {
+            return bantu;
+        }
+    private boolean cekObjekTabrakTembokBawah(Sel player, String l) {
+            boolean bantu = false;
             for (int i = 0; i < tembok.size(); i++) {
                 Tembok wall = (Tembok) tembok.get(i);
                 if (pemain.PosisiBawahObjek(wall)) {
                     bantu = true;
                     break;
                 }
-            }
+            }return bantu;
         }
-        return bantu;
-    }
-
+        
     public void Completed() {
         if (pemain.getPosisiX() == target.getPosisiX() && pemain.getPosisiY() == target.getPosisiY()) {
             JOptionPane.showMessageDialog(null, "Selamat anda berhasil menyelesaikan game ini dengan " + this.getAllperintah().size() + " langkah");
             tempat.clear();
         }
     }
-
-    public void undo() {
-        int i = Allperintah.size() - 1;
-        if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Kembali ke tempat awal");
-        } else {
-            String input = Allperintah.get(i);
-            String[] un = input.split(" ");
-            if (un[0].equalsIgnoreCase("d")) {
-                for (int j = 0; j < Integer.parseInt(String.valueOf(un[1])); j++) {
-                    if (!cekObjekTabrakTembok(pemain, "u")) {
-                        pemain.Gerak(0, -jarak);
-                        repaint();
-                    }
-                }
-                Allperintah.remove(i);
-            } else if (un[0].equalsIgnoreCase("u")) {
-                for (int j = 0; j < Integer.parseInt(String.valueOf(un[1])); j++) {
-                    if (!cekObjekTabrakTembok(pemain, "d")) {
-                        pemain.Gerak(0, jarak);
-                        repaint();
-                    }
-                }
-                Allperintah.remove(i);
-            } else if (un[0].equalsIgnoreCase("l")) {
-                for (int j = 0; j < Integer.parseInt(String.valueOf(un[1])); j++) {
-                    if (!cekObjekTabrakTembok(pemain, "r")) {
-                        pemain.Gerak(jarak, 0);
-                        repaint();
-                    }
-                }
-                Allperintah.remove(i);
-            } else if (un[0].equalsIgnoreCase("r")) {
-                for (int j = 0; j < Integer.parseInt(String.valueOf(un[1])); j++) {
-                    if (!cekObjekTabrakTembok(pemain, "l")) {
-                        pemain.Gerak(-jarak, 0);
-                        repaint();
-                    }
-                }
-                Allperintah.remove(i);
-            }
-        }
-    }
-
-    public void auto1() {
-        String[] pintas = {"r 3", "d 3", "r 2", "d 1"};
-        for (int i = 0; i < pintas.length; i++) {
-            PerintahGerak(pintas[i]);
-        }
-    }
-
-    public void auto2() {
-        String[] pintas = {"r 2", "u 4", "r 3"};
-        for (int i = 0; i < pintas.length; i++) {
-            PerintahGerak(pintas[i]);
-        }
-    }
-
-    public void auto3() {
-        String[] pintas = {"d 1", "l 2", "d 3", "l 3"};
-        for (int i = 0; i < pintas.length; i++) {
-            PerintahGerak(pintas[i]);
-        }
-    }
-
     public void restart() {
         Allperintah.clear();
         tembok.clear();
@@ -301,21 +241,6 @@ public class Tempat extends JPanel {
             Logger.getLogger(Tempat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void load() {
-        this.Allperintah.clear();
-        try {
-            Tempat tempat = new Tempat(Alamatpeta);
-            tempat.loadPermainan(new File("save.dat"));
-            for (int i = 0; i < tempat.Allperintah.size(); i++) {
-                PerintahGerak(tempat.Allperintah.get(i));
-            }
-            this.savePermainan(new File("save.dat"));
-        } catch (IOException ex) {
-            Logger.getLogger(Tempat.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public int getLebar() {
         return this.lebar;
     }
@@ -362,6 +287,46 @@ public class Tempat extends JPanel {
 
     public void setAllperintah(ArrayList Allperintah) {
         this.Allperintah = Allperintah;
+    }
+    public String langkah(){
+    String tampil=""+langkah;
+    return tampil;
+    }
+    public void Naik() {
+        if (cekObjekTabrakTembokAtas(pemain, "r")) {
+            return;
+        } else {
+            pemain.Gerak(0, - jarak);
+            repaint();
+        }
+        langkah++;
+    }
+    public void Turun(){
+        if (cekObjekTabrakTembokBawah(pemain, "l")) {
+            return;
+        } else {
+            pemain.Gerak(0, jarak);
+            repaint();
+        }
+        langkah++;
+    }
+    public void Kanan(){
+        if (cekObjekTabrakTembokKanan(pemain, "d")) {
+            return;
+        } else {
+            pemain.Gerak(jarak, 0);
+            repaint();
+        }
+        langkah++;
+    }
+    public void Kiri(){
+        if (cekObjekTabrakTembokKiri(pemain, "u")) {
+            return;
+        } else {
+            pemain.Gerak(-jarak, 0);
+            repaint();
+        }
+        langkah++;
     }
 
 }
